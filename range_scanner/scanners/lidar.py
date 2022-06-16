@@ -422,7 +422,9 @@ def performScan(context,
                     partIDIndex = closestHit.target.material_slots[materialMappings[closestHit.target][1][closestHit.faceIndex]].name
 
                 closestHit.categoryID = categoryIDs[closestHit.target["categoryID"]]
+                closestHit.categoryName = closestHit.target["categoryID"]
                 closestHit.partID = partIDs[partIDIndex]
+                closestHit.partName = partIDIndex
                     
                 if closestHit.wasReflected:
                     if debugLines:

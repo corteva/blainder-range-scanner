@@ -2,15 +2,18 @@ import csv
 import numpy as np
 import os
 
-def export(filePath, fileName, data, exportNoiseData):
+def export(filePath, fileName, data, exportNoiseData, categoryIDs, partIDs):
     print("Exporting data into .csv format...")
 
     with open(os.path.join(filePath, "%s.csv" % fileName), 'w', newline='') as csvfile:
         writer = csv.writer(csvfile, delimiter=";", quotechar='|', quoting=csv.QUOTE_MINIMAL)
 
+        categoryLookup = {y: x for x, y in categoryIDs.items()}
+        partLookup = {y: x for x, y in partIDs.items()}
+
         if exportNoiseData:
             # write header to file
-            writer.writerow(["categoryID", "partID", "X", "Y", "Z", "distance", "X_noise", "Y_noise", "Z_noise", "distance_noise", "intensity", "red", "green", "blue"])
+            writer.writerow(["categoryID", "CategoryName", "partID", "PartName", "X", "Y", "Z", "distance", "X_noise", "Y_noise", "Z_noise", "distance_noise", "intensity", "red", "green", "blue"])
 
             for hit in data:
                 # concatenate each entry and write it to a file
@@ -21,7 +24,7 @@ def export(filePath, fileName, data, exportNoiseData):
                 # write data to file
                 writer.writerow(
                     [
-                        hit[0], hit[1],
+                        hit[0], categoryLookup[hit[0]], hit[1], partLookup[hit[1]],
                         hit[2], hit[3], hit[4], 
                         hit[5],
                         hit[10], hit[11], hit[12], 
@@ -32,12 +35,12 @@ def export(filePath, fileName, data, exportNoiseData):
                 )
         else:
             # write header to file
-            writer.writerow(["categoryID", "partID", "X", "Y", "Z", "distance", "intensity", "red", "green", "blue"])
+            writer.writerow(["categoryID", "CategoryName", "partID", "PartName", "X", "Y", "Z", "distance", "intensity", "red", "green", "blue"])
 
             for hit in data:
                 writer.writerow(
                     [
-                        hit[0], hit[1],
+                        hit[0], categoryLookup[hit[0]], hit[1], partLookup[hit[1]],
                         hit[2], hit[3], hit[4], 
                         hit[5],
                         hit[6],

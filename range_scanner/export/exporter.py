@@ -61,7 +61,7 @@ class Exporter:
 
     def exportCSV(self):
         from . import export_csv
-        export_csv.export(self.filePath, self.fileName, self.mappedData.transpose(), self.exportNoiseData)
+        export_csv.export(self.filePath, self.fileName, self.mappedData.transpose(), self.exportNoiseData, self.categoryIDs, self.partIDs)
 
     def exportSegmentedImage(self, exportPascalVoc):
         from . import export_segmented_image
